@@ -1,0 +1,9 @@
+{% extends "layout.html" %} {% block title %}Login - Spotify Tool{% endblock %}
+{% block content %}
+<h2>Log In to Spotify</h2>
+<p>
+  To use the Spotify Tool, please log in with your Spotify account by clicking
+  the button below.
+</p>
+<a href="{{ auth_url }}" class="button">Log In with Spotify</a>
+{% endblock %}
