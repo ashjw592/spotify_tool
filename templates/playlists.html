@@ -1,0 +1,28 @@
+{% extends "layout.html" %} {% block title %}Playlists - Spotify Tool{% endblock
+%} {% block content %}
+<h2>Your Spotify Playlists</h2>
+{% if playlists %}
+<ul class="playlists">
+  {% for playlist in playlists['items'] %}
+  <li class="playlist-item">
+    <img
+      src="{{ playlist.images[0].url if playlist.images }}"
+      alt="Playlist Cover"
+      class="playlist-cover"
+    />
+    <div class="playlist-details">
+      <p><strong>Name:</strong> {{ playlist.name }}</p>
+      <p><strong>Tracks:</strong> {{ playlist.tracks.total }}</p>
+      <p>
+        <strong>Playlist URL:</strong>
+        <a href="{{ playlist.external_urls.spotify }}" target="_blank"
+          >View on Spotify</a
+        >
+      </p>
+    </div>
+  </li>
+  {% endfor %}
+</ul>
+{% else %}
+<p>No playlists found.</p>
+{% endif %} {% endblock %}
