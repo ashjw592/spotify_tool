@@ -5,5 +5,6 @@
   This tool allows you to interact with your Spotify account. Please log in to
   get started.
 </p>
-<a href="{{ url_for('login') }}" class="button">Log In with Spotify</a>
-{% endblock %}
+{% if session.get("token_info") %}
+<a href="{{ url_for('playlists') }}" class="button">View Your Playlists</a>
+{% endif %} {% endblock %}
