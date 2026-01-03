@@ -55,7 +55,12 @@ def profile():
         return redirect(url_for("login"))
     sp = spotipy.Spotify(auth_manager=auth_manager)
     user_profile = sp.current_user()
-    return f"Logged in as: {user_profile['display_name']}"
+    return render_template("profile.html", user_profile=user_profile) # type: ignore spotipy doesn't have typing info
+
+@app.route("/logout")
+def logout():
+    session.clear()
+    return redirect(url_for("index"))
 
 
 if __name__ == "__main__":

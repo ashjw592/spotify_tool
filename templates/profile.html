@@ -1,0 +1,27 @@
+{%extends "layout.html"%} {%block title%}Profile - Spotify Tool{%endblock%}
+{%block content%}
+<h2>Your Spotify Profile</h2>
+{% if user_profile %}
+<div class="profile">
+  <img
+    src="{{ user_profile.images[0].url if user_profile.images }}"
+    alt="Profile Picture"
+    class="profile-picture"
+  />
+  <div class="profile-details">
+    <p><strong>Display Name:</strong> {{ user_profile.display_name }}</p>
+    <p><strong>Followers:</strong> {{ user_profile.followers.total }}</p>
+    <p><strong>Spotify ID:</strong> {{ user_profile.id }}</p>
+    <p>
+      <strong>Profile URL:</strong>
+      <a href="{{ user_profile.external_urls.spotify }}" target="_blank"
+        >View on Spotify</a
+      >
+    </p>
+    <button onclick="location.href='{{ url_for('logout') }}'">Log Out</button>
+  </div>
+</div>
+
+{% else %}
+<p>User profile data is not available.</p>
+{% endif %} {%endblock%}
