@@ -2,9 +2,10 @@ import spotipy
 from spotipy.oauth2 import SpotifyOAuth
 from flask import Flask, app, redirect, request, session, url_for, render_template
 import os
+import json
 
 app = Flask(__name__)
-SCOPE = "playlist-modify-private user-read-private playlist-read-private"
+SCOPE = "playlist-modify-private user-read-private playlist-read-private user-library-read"
 app.secret_key = os.urandom(24)
 CLIENT_ID = os.getenv("SPOTIPY_CLIENT_ID")
 CLIENT_SECRET = os.getenv("SPOTIPY_CLIENT_SECRET")
@@ -68,6 +69,20 @@ def playlists():
     sp = spotipy.Spotify(auth_manager=auth_manager)
     playlists = sp.current_user_playlists()
     return render_template("playlists.html", playlists=playlists)
+
+@app.route("/saved-tracks")
+def saved_tracks():
+    auth_manager = SpotifyOAuth(scope=SCOPE,
+                                client_id=CLIENT_ID,
+                                client_secret=CLIENT_SECRET,
+                                redirect_uri=REDIRECT_URI,
+                                cache_handler=CACHE_HANDLER)
+    if not auth_manager.validate_token(auth_manager.get_cached_token()):
+        return redirect(url_for("login"))
+    sp = spotipy.Spotify(auth_manager=auth_manager)
+    results = sp.current_user_saved_tracks()
+    tracks = results['items']
+    return render_template("saved_tracks.html", tracks=tracks)
 
 
 if __name__ == "__main__":

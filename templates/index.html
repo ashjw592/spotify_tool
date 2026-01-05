@@ -7,4 +7,7 @@
 </p>
 {% if session.get("token_info") %}
 <a href="{{ url_for('playlists') }}" class="button">View Your Playlists</a>
-{% endif %} {% endblock %}
+<a href="{{ url_for('saved_tracks') }}" class="button"
+  >View Your Saved Tracks</a
+>
+{% else %} {% endif %} {% endblock %}

@@ -1,0 +1,31 @@
+{% extends "layout.html" %} {% block title %}Saved Tracks - Spotify Tool{%
+endblock %} {% block content %}
+<h1>Saved Tracks</h1>
+{% if tracks %}
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th>Title</th>
+      <th>Artist</th>
+      <th>Album</th>
+      <th>Duration</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for track in tracks %}
+    <tr>
+      <td>{{ track.track.name }}</td>
+      <td>{{ track.track.artists[0].name }}</td>
+      <td>{{ track.track.album.name }}</td>
+      <td>
+        {{ track.track.duration_ms//60000
+        }}:{{'%02d'|format((track.track.duration_ms//1000) % 60) }}
+      </td>
+    </tr>
+    {% endfor %}
+  </tbody>
+  {% else %}
+  <p>No saved tracks found.</p>
+  {% endif %}
+</table>
+{% endblock %}
